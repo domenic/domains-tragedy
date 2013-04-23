@@ -14,6 +14,11 @@ http.createServer(function (req, res) {
     });
 
     d.run(function () {
+        if (Math.random() > 0.8) {
+            // This will get handled by the domain!
+            throw new Error("Error from immediately inside `d.run`");
+        }
+
         if (req.url === "/data") {
             atmosphericData.getNextData(function (data) {
                 res.statusCode = 200;
