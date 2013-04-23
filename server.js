@@ -20,7 +20,11 @@ http.createServer(function (req, res) {
         }
 
         if (req.url === "/data") {
+            console.log("process.domain before the call into `atmosphericData.getNextData`", process.domain);
+
             atmosphericData.getNextData(function (data) {
+                console.log("process.domain inside `atmosphericData.getNextData`", process.domain);
+
                 if (Math.random() > 0.8) {
                     // This will not get handled by the domain, and will crash the server! We "escaped"!
                     throw new Error("Error from immediately inside `atmosphericData.getNextData`");
