@@ -21,6 +21,11 @@ http.createServer(function (req, res) {
 
         if (req.url === "/data") {
             atmosphericData.getNextData(function (data) {
+                if (Math.random() > 0.8) {
+                    // This will not get handled by the domain, and will crash the server! We "escaped"!
+                    throw new Error("Error from immediately inside `atmosphericData.getNextData`");
+                }
+
                 res.statusCode = 200;
                 res.setHeader("Content-Type", "text/plain");
                 res.end("New data: " + data);
